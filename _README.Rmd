@@ -1,0 +1,54 @@
+---
+title: "README"
+author: "Bob Rudis"
+date: August 21, 2014
+output:
+  md_document:
+    variant: markdown_github
+---
+
+The `dtupdate` packages has functions that attempt to figure out which packages have non-CRAN versions (currently only looks for github ones) and then tries to figure out which ones have updates (i.e. the github version is > local version). It provides an option (not recommended) to auto-update any packages with newer development versions.
+
+The `URL` and `BugReports` fields are, franly, a mess. Many packages have multiple URLs and the non-github URLs are all over the place. It will take some time, but I'm pretty confident I can get r-forge, bitbucket, gitorius and other external repos working. This was an easy first step.
+
+The following functions are implemented:
+
+- `github_update` - find, report and optionally update packages installed from or available on github. This initial version just keys off of the `BugReports:` field, looking for a github-ish URL and then grabbing what info that it can to see if the repo is in package format and has a `DESCRIPTION` file it can key off of
+
+The following data sets are included:
+
+### News
+
+- Version `1.0` released (nascent github pkg update capability)
+
+### Installation
+
+```{r eval=FALSE}
+devtools::install_github("hrbrmstr/dtupdate")
+```
+
+### Usage
+
+```{r}
+library(dtupdate)
+
+# current verison
+packageVersion("dtupdate")
+
+# see what packages are available for an update
+options(width=120)
+github_update()
+
+```
+
+### Test Results
+
+```{r}
+library(iptools)
+library(testthat)
+
+date()
+
+test_dir("tests/")
+```
+
