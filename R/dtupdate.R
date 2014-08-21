@@ -7,6 +7,7 @@
 #' @param auto.install should it try to auto-install newer packages [not recommended] (bool, initially \code{FALSE})
 #' @param .progress show a progress bar (bool, initially \code{FALSE})
 #' @return data frame of installed packages with information on owner & whether an update is available
+#' @import plyr
 #' @note package installation exceptions are caught with \code{try}, but are not reported out in any other way but console errors
 #' @export
 #' @examples \dontrun{
