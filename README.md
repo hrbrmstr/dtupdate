@@ -71,13 +71,13 @@ github_update()
 ### Test Results
 
 ``` {.r}
-library(iptools)
+library(dtupdate)
 library(testthat)
 
 date()
 ```
 
-    ## [1] "Thu Aug 21 10:27:43 2014"
+    ## [1] "Thu Aug 21 10:28:55 2014"
 
 ``` {.r}
 test_dir("tests/")

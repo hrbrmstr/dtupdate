@@ -47,7 +47,7 @@ github_update()
 ### Test Results
 
 ```{r}
-library(iptools)
+library(dtupdate)
 library(testthat)
 
 date()
