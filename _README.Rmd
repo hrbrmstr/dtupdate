@@ -27,6 +27,10 @@ The following data sets are included:
 devtools::install_github("hrbrmstr/dtupdate")
 ```
 
+```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+options(width=120)
+```
+
 ### Usage
 
 ```{r}
@@ -36,7 +40,6 @@ library(dtupdate)
 packageVersion("dtupdate")
 
 # see what packages are available for an update
-options(width=120)
 github_update()
 
 ```
