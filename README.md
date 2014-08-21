@@ -1,6 +1,6 @@
 The `dtupdate` packages has functions that attempt to figure out which packages have non-CRAN versions (currently only looks for github ones) and then tries to figure out which ones have updates (i.e. the github version is \> local version). It provides an option (not recommended) to auto-update any packages with newer development versions.
 
-The `URL` and `BugReports` fields are, franly, a mess. Many packages have multiple URLs and the non-github URLs are all over the place. It will take some time, but I'm pretty confident I can get r-forge, bitbucket, gitorius and other external repos working. This was an easy first step.
+The `URL` and `BugReports` fields are, frankly, a mess. Many packages have multiple URLs in one or both of those fields and the non-github URLs are all over the place in terms of formatting. It will take some time, but I'm pretty confident I can get r-forge, bitbucket, gitorius and other external repos working. This was an easy first step.
 
 The following functions are implemented:
 
@@ -38,6 +38,7 @@ github_update()
     ##      package.repo       owner installed.version current.version update.available
     ## 1        corrplot      taiyun              0.73            0.73               no
     ## 2      data.table  Rdatatable             1.9.3           1.9.3               no
+    ## 3        dtupdate    hrbrmstr               1.0             1.0               no
     ## 4         formatR       yihui            0.10.5          0.10.5               no
     ## 5         ggplot2      hadley          1.0.0.99        1.0.0.99               no
     ## 6        ggthemes      jrnold             1.8.0           1.8.0               no
@@ -77,7 +78,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Thu Aug 21 10:23:10 2014"
+    ## [1] "Thu Aug 21 10:25:50 2014"
 
 ``` {.r}
 test_dir("tests/")

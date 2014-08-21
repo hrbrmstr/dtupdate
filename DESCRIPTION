@@ -1,6 +1,7 @@
 Package: dtupdate
 Type: Package
-Title: The dtupdate package has functions that try to make it easier to keep up with the non-CRAN universe
+Title: The dtupdate package has functions that try to make it easier to keep up
+    with the non-CRAN universe
 Version: 1.0
 Date: 2014-08-21
 Author: Bob Rudis (@hrbrmstr)

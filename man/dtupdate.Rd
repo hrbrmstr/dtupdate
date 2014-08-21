@@ -3,7 +3,7 @@
 \name{dtupdate}
 \alias{dtupdate}
 \alias{dtupdate-package}
-\title{dtupdate tries to make it easier to keep up with the non-CRAN universe}
+\title{The dtupdate package has functions that try to make it easier to keep up with the non-CRAN universe}
 \description{
 dtupdate attempts to figure out which packages have non-CRAN versions
     (currently only looks for github ones) and then tries to figure out
