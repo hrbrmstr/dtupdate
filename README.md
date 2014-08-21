@@ -6,8 +6,6 @@ The following functions are implemented:
 
 -   `github_update` - find, report and optionally update packages installed from or available on github. This initial version just keys off of the `BugReports:` field, looking for a github-ish URL and then grabbing what info that it can to see if the repo is in package format and has a `DESCRIPTION` file it can key off of
 
-The following data sets are included:
-
 ### News
 
 -   Version `1.0` released (nascent github pkg update capability)
@@ -77,7 +75,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Thu Aug 21 10:28:55 2014"
+    ## [1] "Thu Aug 21 10:30:10 2014"
 
 ``` {.r}
 test_dir("tests/")
