@@ -9,5 +9,5 @@
 #'     It provides an option (not recommended) to auto-update (optionally,
 #'     selectively) any packages with newer development versions.
 #' @import httr dplyr stringr devtools
-#' @exportPattern ^[[:alpha:]]+
+# exportPattern ^[[:alpha:]]+
 NULL
