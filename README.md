@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hrbrmstr/dtupdate.png)](https://travis-ci.org/hrbrmstr/dtupdate)
+
 The `dtupdate` packages has functions that attempt to figure out which packages have non-CRAN versions (currently only looks for github ones) and then tries to figure out which ones have updates (i.e. the github version is \> local version). It provides an option (not recommended) to auto-update any packages with newer development versions, which is tempered by the ability to selectively install said packages.
 
 The `URL` and `BugReports` fields are, frankly, a mess. Many packages have multiple URLs in one or both of those fields and the non-github URLs are all over the place in terms of formatting. It will take some time, but I'm pretty confident I can get r-forge, bitbucket, gitorius and other external repos working. This was an easy first step.
@@ -53,7 +55,7 @@ github_update()
 
     ##           package       owner installed.version current.version update.available
     ## 1      data.table  Rdatatable             1.9.3           1.9.3            FALSE
-    ## 2        dtupdate    hrbrmstr               1.1             1.0            FALSE
+    ## 2        dtupdate    hrbrmstr               1.1             1.1            FALSE
     ## 3        forecast robjhyndman               5.4             5.6             TRUE
     ## 4         formatR       yihui              0.10          0.10.5             TRUE
     ## 5          gmailr   jimhester             0.0.1           0.0.1            FALSE
@@ -87,7 +89,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Fri Aug 22 10:50:04 2014"
+    ## [1] "Fri Aug 22 11:00:40 2014"
 
 ``` {.r}
 test_dir("tests/")
