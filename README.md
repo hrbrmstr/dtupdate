@@ -10,6 +10,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version `1.2` switches from `plyr` to `dplyr` to stop [@jayjacobs](<http://twitter.com/jayjacobs>) from whining, removes the `libLoc` switch from version `1.1` and replaces it with a boolean `all` parameter which let's you switch from inspecting the github packages installed across all library paths or just the first one (*usually* your user/local path), and adds a `show.location` parameter which will include the library path for each package in the data frame return
 -   Version `1.1` incorporates functionality from [Thomas J Leeper](http://twitter.com/thosjleeper)'s gist: , including the ability to interactively select which packages to install, the option to specify which `libLoc` will be searched by `installed.packages` and handling of a fringe case where the repo name does not match the package name (ironically, this was due to Hadley's `reshape` repo for the `reshape2` package)
 -   Version `1.0` released (nascent github pkg update capability)
 
@@ -39,46 +40,56 @@ library(dtupdate)
     ## 
     ## Loading required package: httr
     ## Loading required package: stringr
-    ## Loading required package: plyr
+    ## Loading required package: dplyr
+    ## 
+    ## Attaching package: 'dplyr'
+    ## 
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+    ## 
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
 ``` {.r}
 # current verison
 packageVersion("dtupdate")
 ```
 
-    ## [1] '1.1'
+    ## [1] '1.2'
 
 ``` {.r}
 # see what packages are available for an update
 github_update()
 ```
 
-    ##           package       owner installed.version current.version update.available
-    ## 1      data.table  Rdatatable             1.9.3           1.9.3            FALSE
-    ## 2        dtupdate    hrbrmstr               1.1             1.1            FALSE
-    ## 3        forecast robjhyndman               5.4             5.6             TRUE
-    ## 4         formatR       yihui              0.10          0.10.5             TRUE
-    ## 5          gmailr   jimhester             0.0.1           0.0.1            FALSE
-    ## 6        jsonlite  jeroenooms             0.9.9          0.9.10             TRUE
-    ## 7           knitr       yihui             1.6.6          1.6.14             TRUE
-    ## 8  knitrBootstrap   jimhester             1.0.0           1.0.0            FALSE
-    ## 9       lubridate      hadley             1.3.3           1.3.3            FALSE
-    ## 10       markdown     rstudio             0.7.4           0.7.4            FALSE
-    ## 11       markdown     rstudio               0.7           0.7.4             TRUE
-    ## 12        memoise      hadley             0.2.1          0.2.99             TRUE
-    ## 13           mime       yihui             0.1.2           0.1.2            FALSE
-    ## 14       miniCRAN      andrie            0.0-20          0.0-20            FALSE
-    ## 15        packrat     rstudio             0.4.0        0.4.0.12             TRUE
-    ## 16           Rcpp    RcppCore            0.11.2        0.11.2.1             TRUE
-    ## 17  RcppArmadillo    RcppCore         0.4.400.0       0.4.400.0            FALSE
-    ## 18       reshape2      hadley               1.4        1.4.0.99             TRUE
-    ## 19         resolv    hrbrmstr             0.2.2           0.2.2            FALSE
-    ## 20           rzmq    armstrtw             0.7.0           0.7.0            FALSE
-    ## 21         scales      hadley             0.2.4        0.2.4.99             TRUE
-    ## 22          shiny     rstudio       0.10.0.9001     0.10.1.9004             TRUE
-    ## 23       shinyAce trestletech             0.1.0           0.1.0            FALSE
-    ## 24        slidify    ramnathv             0.4.5           0.4.5            FALSE
-    ## 25         testit       yihui               0.3             0.3            FALSE
+    ##           package           repo       owner installed.version current.version update.available
+    ## 1            Rcpp           Rcpp    RcppCore            0.11.2        0.11.2.1             TRUE
+    ## 2   RcppArmadillo  RcppArmadillo    RcppCore         0.4.400.0       0.4.400.0            FALSE
+    ## 3      data.table     data.table  Rdatatable             1.9.3           1.9.3            FALSE
+    ## 4        dtupdate       dtupdate    hrbrmstr               1.2             1.1            FALSE
+    ## 5        forecast       forecast robjhyndman               5.4             5.6             TRUE
+    ## 6         formatR        formatR       yihui              0.10          0.10.5             TRUE
+    ## 7          gmailr         gmailr   jimhester             0.0.1           0.0.1            FALSE
+    ## 8        jsonlite       jsonlite  jeroenooms             0.9.9          0.9.10             TRUE
+    ## 9           knitr          knitr       yihui             1.6.6          1.6.14             TRUE
+    ## 10 knitrBootstrap knitrBootstrap   jimhester             1.0.0           1.0.0            FALSE
+    ## 11      lubridate      lubridate      hadley             1.3.3           1.3.3            FALSE
+    ## 12       markdown       markdown     rstudio             0.7.4           0.7.4            FALSE
+    ## 13        memoise        memoise      hadley             0.2.1          0.2.99             TRUE
+    ## 14           mime           mime       yihui             0.1.2           0.1.2            FALSE
+    ## 15       miniCRAN       miniCRAN      andrie            0.0-20          0.0-20            FALSE
+    ## 16        packrat        packrat     rstudio             0.4.0        0.4.0.12             TRUE
+    ## 17       reshape2        reshape      hadley               1.4        1.4.0.99             TRUE
+    ## 18         resolv         resolv    hrbrmstr             0.2.2           0.2.2            FALSE
+    ## 19           rzmq           rzmq    armstrtw             0.7.0           0.7.0            FALSE
+    ## 20         scales         scales      hadley          0.2.4.99        0.2.4.99            FALSE
+    ## 21         scales         scales      hadley             0.2.4        0.2.4.99             TRUE
+    ## 22          shiny          shiny     rstudio       0.10.0.9001     0.10.1.9004             TRUE
+    ## 23       shinyAce       shinyAce trestletech             0.1.0           0.1.0            FALSE
+    ## 24        slidify        slidify    ramnathv             0.4.5           0.4.5            FALSE
+    ## 25         testit         testit       yihui               0.3             0.3            FALSE
 
 ### Test Results
 
@@ -89,7 +100,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Fri Aug 22 11:00:40 2014"
+    ## [1] "Fri Aug 22 16:16:01 2014"
 
 ``` {.r}
 test_dir("tests/")

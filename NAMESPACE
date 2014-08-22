@@ -3,6 +3,6 @@
 export(github_update)
 exportPattern("^[[:alpha:]]+")
 import(devtools)
+import(dplyr)
 import(httr)
-import(plyr)
 import(stringr)

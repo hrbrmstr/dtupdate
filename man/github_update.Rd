@@ -4,7 +4,7 @@
 \title{github_update - find, report and optionally update packages installed from or available on github}
 \usage{
 github_update(auto.install = FALSE, ask = TRUE, widget = FALSE,
-  .progress = FALSE, lib.loc = NULL)
+  .progress = FALSE, all = TRUE, show.location = FALSE)
 }
 \arguments{
 \item{auto.install}{should it try to auto-install newer packages [not recommended] (bool, initially \code{FALSE})}
@@ -15,10 +15,12 @@ github_update(auto.install = FALSE, ask = TRUE, widget = FALSE,
 
 \item{.progress}{show a progress bar (bool, initially \code{FALSE})}
 
-\item{lib.loc}{character vector describing the location of R library trees to search through, or NULL for all known trees (see \link{.libPaths})}
+\item{all}{search all \code{.libPaths()} (\code{TRUE}) or only the first one (initially \code{TRUE})}
+
+\item{show.location}{include the library location in the returned data frame (initially \code{FALSE})}
 }
 \value{
-data frame of installed packages with information on owner & whether an update is available
+data frame of installed packages with information on owner & whether an update is available (optionally includes installed library path)
 }
 \description{
 Finds local packages that [may] have github versions, then informs &
@@ -34,29 +36,32 @@ package installation exceptions are caught with \code{try}, but are not reported
 \examples{
 \dontrun{
 github_update()
-##      package.repo       owner installed.version current.version update.available
-## 1      data.table  Rdatatable             1.9.3           1.9.3            FALSE
-## 2        dtupdate    hrbrmstr               1.0             1.0            FALSE
-## 3        forecast robjhyndman               5.4             5.6             TRUE
-## 4          gmailr   jimhester             0.0.1           0.0.1            FALSE
-## 5        jsonlite  jeroenooms             0.9.9          0.9.10             TRUE
-## 6           knitr       yihui             1.6.6          1.6.14             TRUE
-## 7  knitrBootstrap   jimhester             1.0.0           1.0.0            FALSE
-## 8       lubridate      hadley             1.3.3           1.3.3            FALSE
-## 9        markdown     rstudio               0.7           0.7.4             TRUE
-## 10        memoise      hadley             0.2.1          0.2.99             TRUE
-## 11       miniCRAN      andrie            0.0-20          0.0-20            FALSE
-## 12        packrat     rstudio             0.4.0        0.4.0.12             TRUE
-## 13           Rcpp    RcppCore            0.11.2        0.11.2.1             TRUE
-## 14  RcppArmadillo    RcppCore         0.4.400.0       0.4.400.0            FALSE
-## 15       reshape2      hadley               1.4        1.4.0.99             TRUE
-## 16         resolv    hrbrmstr             0.2.2           0.2.2            FALSE
-## 17           rzmq    armstrtw             0.7.0           0.7.0            FALSE
-## 18         scales      hadley             0.2.4        0.2.4.99             TRUE
-## 19          shiny     rstudio       0.10.0.9001     0.10.1.9004             TRUE
-## 20       shinyAce trestletech             0.1.0           0.1.0            FALSE
-## 21        slidify    ramnathv             0.4.5           0.4.5            FALSE
-## 22         testit       yihui               0.3             0.3            FALSE
+
+##           package           repo       owner installed.version current.version update.available
+## 1            Rcpp           Rcpp    RcppCore            0.11.2        0.11.2.1             TRUE
+## 2   RcppArmadillo  RcppArmadillo    RcppCore         0.4.400.0       0.4.400.0            FALSE
+## 3      data.table     data.table  Rdatatable             1.9.3           1.9.3            FALSE
+## 4        dtupdate       dtupdate    hrbrmstr               1.1             1.1            FALSE
+## 5        forecast       forecast robjhyndman               5.4             5.6             TRUE
+## 6         formatR        formatR       yihui              0.10          0.10.5             TRUE
+## 7          gmailr         gmailr   jimhester             0.0.1           0.0.1            FALSE
+## 8        jsonlite       jsonlite  jeroenooms             0.9.9          0.9.10             TRUE
+## 9           knitr          knitr       yihui             1.6.6          1.6.14             TRUE
+## 10 knitrBootstrap knitrBootstrap   jimhester             1.0.0           1.0.0            FALSE
+## 11      lubridate      lubridate      hadley             1.3.3           1.3.3            FALSE
+## 12       markdown       markdown     rstudio             0.7.4           0.7.4            FALSE
+## 13        memoise        memoise      hadley             0.2.1          0.2.99             TRUE
+## 14           mime           mime       yihui             0.1.2           0.1.2            FALSE
+## 15       miniCRAN       miniCRAN      andrie            0.0-20          0.0-20            FALSE
+## 16        packrat        packrat     rstudio             0.4.0        0.4.0.12             TRUE
+## 17       reshape2        reshape      hadley               1.4        1.4.0.99             TRUE
+## 18         resolv         resolv    hrbrmstr             0.2.2           0.2.2            FALSE
+## 19          rzmq           rzmq    armstrtw             0.7.0           0.7.0            FALSE
+## 20         scales         scales      hadley             0.2.4        0.2.4.99             TRUE
+## 21          shiny          shiny     rstudio       0.10.0.9001     0.10.1.9004             TRUE
+## 22       shinyAce       shinyAce trestletech             0.1.0           0.1.0            FALSE
+## 23        slidify        slidify    ramnathv             0.4.5           0.4.5            FALSE
+## 24         testit         testit       yihui               0.3             0.3            FALSE
 }
 }
 
