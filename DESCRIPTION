@@ -2,24 +2,24 @@ Package: dtupdate
 Type: Package
 Title: The dtupdate package has functions that try to make it easier to keep up
     with the non-CRAN universe
-Version: 1.0
-Date: 2014-08-21
-Author: Bob Rudis (@hrbrmstr)
+Version: 1.1
+Date: 2014-08-22
+Author: Bob Rudis (@hrbrmstr), Thomas J Leeper (@thosjleeper)
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: dtupdate attempts to figure out which packages have non-CRAN
     versions (currently only looks for github ones) and then tries to figure
     out which ones have updates (i.e. the github version is > local version).
-    It provides an option (not recommended) to auto-update any packages
-    with newer development versions.
+    It provides an option (not recommended) to (optionally, selectively)
+    auto-update any packages with newer development versions.
 URL: https://github.com/hrbrmstr/dtupdate
 BugReports: https://github.com/hrbrmstr/dtupdate/issues
-License: GPL-2
+License: MIT + file LICENSE
 Suggests:
-    testthat,
-    devtools
+    testthat
 Depends:
     R (>= 3.0.0),
-    httr (>= 0.4.0),
+    devtools,
+    httr (>= 0.3.0),
     stringr,
     plyr,
     httr

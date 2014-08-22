@@ -8,10 +8,10 @@
 dtupdate attempts to figure out which packages have non-CRAN versions
     (currently only looks for github ones) and then tries to figure out
     which ones have updates (i.e. the github version is > local version).
-    It provides an option (not recommended) to auto-update any packages with
-    newer development versions.
+    It provides an option (not recommended) to auto-update (optionally,
+    selectively) any packages with newer development versions.
 }
 \author{
-Bob Rudis (@hrbrmstr)
+Bob Rudis (@hrbrmstr), Thomas J Leeper (@thosjleeper)
 }
 

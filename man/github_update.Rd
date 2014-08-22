@@ -3,12 +3,19 @@
 \alias{github_update}
 \title{github_update - find, report and optionally update packages installed from or available on github}
 \usage{
-github_update(auto.install = FALSE, .progress = FALSE)
+github_update(auto.install = FALSE, ask = TRUE, widget = FALSE,
+  .progress = FALSE, lib.loc = NULL)
 }
 \arguments{
 \item{auto.install}{should it try to auto-install newer packages [not recommended] (bool, initially \code{FALSE})}
 
+\item{ask}{if this and \code{auto.install}==\code{TRUE} a pkg install select list will be shown (graphical or text widget dependent upon \code{widget})}
+
+\item{widget}{if this and \code{auto.install}==\code{TRUE} and \code{ask}==\code{TRUE} then a GUI select widget will}
+
 \item{.progress}{show a progress bar (bool, initially \code{FALSE})}
+
+\item{lib.loc}{character vector describing the location of R library trees to search through, or NULL for all known trees (see \link{.libPaths})}
 }
 \value{
 data frame of installed packages with information on owner & whether an update is available
@@ -18,6 +25,8 @@ Finds local packages that [may] have github versions, then informs &
     optionally updates them to the newest versions. It is recommended that you
     still perform the updates by hand since you may want to double-check
     the repo for any gotchas or incompatibilities with other installed packages.
+
+    Added code from Thomas J Leeper's (@thosjleeper) \code{#spiffy} gist: \url{https://gist.github.com/leeper/9123584}
 }
 \note{
 package installation exceptions are caught with \code{try}, but are not reported out in any other way but console errors
@@ -26,33 +35,28 @@ package installation exceptions are caught with \code{try}, but are not reported
 \dontrun{
 github_update()
 ##      package.repo       owner installed.version current.version update.available
-## 1        corrplot      taiyun              0.73            0.73               no
-## 2      data.table  Rdatatable             1.9.3           1.9.3               no
-## 3          gmailr   jimhester             0.0.1           0.0.1               no
-## 4        miniCRAN      andrie            0.0-20          0.0-20               no
-## 5   RcppArmadillo    RcppCore         0.4.400.0       0.4.400.0               no
-## 6        corrplot      taiyun              0.73            0.73               no
-## 7        forecast robjhyndman               5.4             5.6              yes
-## 8         formatR       yihui              0.10          0.10.5              yes
-## 9         ggplot2      hadley             1.0.0        1.0.0.99              yes
-## 10       ggthemes      jrnold             1.7.0           1.8.0              yes
-## 11          highr       yihui               0.3           0.3.1              yes
-## 13       jsonlite  jeroenooms             0.9.9          0.9.10              yes
-## 14          knitr       yihui             1.6.6          1.6.14              yes
-## 15 knitrBootstrap   jimhester             1.0.0           1.0.0               no
-## 16      lubridate      hadley             1.3.3           1.3.3               no
-## 17       markdown     rstudio               0.7           0.7.4              yes
-## 18        memoise      hadley             0.2.1          0.2.99              yes
-## 19           mime       yihui             0.1.1           0.1.2              yes
-## 20        packrat     rstudio             0.4.0        0.4.0.12              yes
-## 21           Rcpp    RcppCore            0.11.2        0.11.2.1              yes
-## 22       reshape2      hadley               1.4        1.4.0.99              yes
-## 23           rzmq    armstrtw             0.7.0           0.7.0               no
-## 24         scales      hadley             0.2.4        0.2.4.99              yes
-## 25          shiny     rstudio       0.10.0.9001     0.10.1.9004              yes
-## 26       shinyAce trestletech             0.1.0           0.1.0               no
-## 27        slidify    ramnathv             0.4.5           0.4.5               no
-## 28         testit       yihui               0.3             0.3               no
+## 1      data.table  Rdatatable             1.9.3           1.9.3            FALSE
+## 2        dtupdate    hrbrmstr               1.0             1.0            FALSE
+## 3        forecast robjhyndman               5.4             5.6             TRUE
+## 4          gmailr   jimhester             0.0.1           0.0.1            FALSE
+## 5        jsonlite  jeroenooms             0.9.9          0.9.10             TRUE
+## 6           knitr       yihui             1.6.6          1.6.14             TRUE
+## 7  knitrBootstrap   jimhester             1.0.0           1.0.0            FALSE
+## 8       lubridate      hadley             1.3.3           1.3.3            FALSE
+## 9        markdown     rstudio               0.7           0.7.4             TRUE
+## 10        memoise      hadley             0.2.1          0.2.99             TRUE
+## 11       miniCRAN      andrie            0.0-20          0.0-20            FALSE
+## 12        packrat     rstudio             0.4.0        0.4.0.12             TRUE
+## 13           Rcpp    RcppCore            0.11.2        0.11.2.1             TRUE
+## 14  RcppArmadillo    RcppCore         0.4.400.0       0.4.400.0            FALSE
+## 15       reshape2      hadley               1.4        1.4.0.99             TRUE
+## 16         resolv    hrbrmstr             0.2.2           0.2.2            FALSE
+## 17           rzmq    armstrtw             0.7.0           0.7.0            FALSE
+## 18         scales      hadley             0.2.4        0.2.4.99             TRUE
+## 19          shiny     rstudio       0.10.0.9001     0.10.1.9004             TRUE
+## 20       shinyAce trestletech             0.1.0           0.1.0            FALSE
+## 21        slidify    ramnathv             0.4.5           0.4.5            FALSE
+## 22         testit       yihui               0.3             0.3            FALSE
 }
 }
 
