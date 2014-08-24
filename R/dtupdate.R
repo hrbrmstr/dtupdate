@@ -1,35 +1,62 @@
+# constructs (from a BugReports or URL URL) a raw.githubusercontent URL pointing to a DESCRIPTION file
+# intended for use with dplyr's mutate() in github_update
+build_description_url <- function(BugReports, URL) {
 
-build_description_url <- function(.BugReports) {
-  description.file <- gsub("http[s]*://github.com", "https://raw.githubusercontent.com", .BugReports)
-  description.file <- gsub("/issues$", "", description.file)
-  description.file <- paste(description.file, "/master/DESCRIPTION", sep="")
+  buildit <- function(.BugReports, .URL) {
+
+    urlout <- strsplit(.URL, 'github.com/')[[1]][2]
+    urlout.b <- gsub('/issues','', .BugReports)
+    urlout.b <- strsplit(urlout.b, 'github.com/')[[1]][2]
+
+    urls <- c(str_match(urlout, "(^[a-zA-Z0-9\\_\\-]+/[a-zA-Z0-9\\_\\-]+$)")[,2],
+              str_match(urlout.b, "(^[a-zA-Z0-9\\_\\-]+/[a-zA-Z0-9\\_\\-]+$)")[,2])
+
+    urls <- unique(urls)
+    urls <- urls[!is.na(urls)]
+
+    return(ifelse(length(urls) == 0, NA, sprintf("https://raw.githubusercontent.com/%s/master/DESCRIPTION", urls)))
+
+  }
+
+  mapply(buildit, BugReports, URL, USE.NAMES=FALSE, SIMPLIFY=TRUE)
+
 }
 
-
+# extracts an owner from a raw.githubusercontent URL
+# intended for use with dplyr's mutate() in github_update
 extract_owner <- function(.description) {
   gsub("(https://raw.githubusercontent.com/|/.*$)", "", .description)
 }
 
+# extracts the github repo name from a raw.githubusercontnet URL
+# intended for use with dplyr's mutate() in github_update
 extract_repo <- function(.description) {
   return(str_match(.description, "https://raw.githubusercontent.com/[a-zA-Z0-9_\\.]+/([a-zA-Z0-9_\\.]+)")[,2])
 }
 
+# retrieves the version # from an R package DESCRIPTION file accessible via URLs in .description
+# intended for use with dplyr's mutate() in github_update
 retrieve_version <- function(.description, .progress=FALSE, pb=NULL) {
   unlist(sapply(.description, function(url) {
     if (.progress) setTxtProgressBar(pb, getTxtProgressBar(pb)+1)
-    req <- GET(url)
-    version <- str_extract(grep("Version", readLines(textConnection(content(req, as="text"))), value=TRUE), "([0-9\\.\\-]+)")
+    version <- character(0)
+    try(req <- GET(url), silent=TRUE)
+    try(version <- str_extract(grep("Version", readLines(textConnection(content(req, as="text"))), value=TRUE), "([0-9\\.\\-]+)"), silent=TRUE)
     ifelse(length(version) == 0 , NA, version)
   }, USE.NAMES=FALSE))
 }
 
-
+# returns a boolean vector of whether .github > .installed for each pair
+# intended for use with dplyr's mutate() in github_update
+compareVersions <- function(.installed, .github) {
+  mapply(function(a, b) { compareVersion(a,b) < 0 }, .installed, .github, USE.NAMES=FALSE, SIMPLIFY=TRUE)
+}
 
 #' @title github_update - find, report and optionally update packages installed from or available on github
 #' @description
 #'     Finds local packages that [may] have github versions, then informs &
 #'     optionally updates them to the newest versions. It is recommended that you
-#'     still perform the updates by hand since you may want to double-check
+#'     still selectively perform the updates since you may want to double-check
 #'     the repo for any gotchas or incompatibilities with other installed packages.
 #'
 #'     Added code from Thomas J Leeper's (@@thosjleeper) \code{#spiffy} gist: \url{https://gist.github.com/leeper/9123584}
@@ -93,16 +120,16 @@ github_update <- function(auto.install=FALSE, ask=TRUE, widget=FALSE, .progress=
 
   # iterate over the possible github package list
 
-  tmp <- pkgs %>%
-    filter(grepl("github", BugReports)) %>%
-    select(Package, Version, BugReports, LibPath) %>%
-    mutate(description=build_description_url(BugReports),
-           owner=extract_owner(description),
-           repo=extract_repo(description),
-           current.version=retrieve_version(description, .progress, pkg.pb),
-           update.available=mapply(function(a, b) { compareVersion(a,b) < 0 }, Version, current.version, USE.NAMES=FALSE)) %>%
-    filter(!is.na(current.version)) %>%
-    arrange(Package)
+  tmp <- as.tbl(pkgs) %>%
+    filter(grepl("github", BugReports) | grepl("github", URL)) %>%           # we only care about github urls & assuming we only have one
+    select(Package, Version, BugReports, URL, LibPath) %>%                   # we only need these fields for now
+    mutate(description=build_description_url(BugReports, URL),               # build DESCRIPTION URL
+           owner=extract_owner(description),                                 # extract repo owner
+           repo=extract_repo(description),                                   # extract repo name
+           current.version=retrieve_version(description, .progress, pkg.pb), # get repo version string
+           update.available=compareVersions(Version, current.version)) %>%   # determine whether an update is available or not
+    filter(!is.na(current.version)) %>%                                      # ignore any github repos that aren't in package format
+    arrange(Package)                                                         # sort the result (since folks will be reading the output)
 
   # done with progress bars
 
