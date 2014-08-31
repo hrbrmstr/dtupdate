@@ -7,7 +7,6 @@ before_install:
 
 install:
   - ./travis-tool.sh install_github hadley/plyr
-  - ./travis-tool.sh install_github rstudio/rmarkdown
   - ./travis-tool.sh install_deps
 
 script: ./travis-tool.sh run_tests
