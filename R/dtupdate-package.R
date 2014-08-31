@@ -8,6 +8,6 @@
 #'     which ones have updates (i.e. the github version is > local version).
 #'     It provides an option (not recommended) to auto-update (optionally,
 #'     selectively) any packages with newer development versions.
-#' @import httr dplyr stringr devtools
+#' @import httr dplyr stringr devtools rmarkdown
 # exportPattern ^[[:alpha:]]+
 NULL

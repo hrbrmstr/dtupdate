@@ -25,7 +25,7 @@ data frame of installed packages with information on owner & whether an update i
 \description{
 Finds local packages that [may] have github versions, then informs &
     optionally updates them to the newest versions. It is recommended that you
-    still perform the updates by hand since you may want to double-check
+    still selectively perform the updates since you may want to double-check
     the repo for any gotchas or incompatibilities with other installed packages.
 
     Added code from Thomas J Leeper's (@thosjleeper) \code{#spiffy} gist: \url{https://gist.github.com/leeper/9123584}

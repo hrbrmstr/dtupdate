@@ -1,0 +1,63 @@
+---
+title: "What’s New?"
+output:
+  html_document:
+    toc: yes
+---
+```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, results='asis'}
+library(devtools)
+library(httr)
+library(stringr)
+library(dtupdate)
+
+get_news <- function(repo, owner) {
+  
+  mapply(repo, owner, FUN=function(repo, owner) {
+    
+    URL <- sprintf("https://raw.githubusercontent.com/%s/%s/master/NEWS", owner, repo)
+    
+    resp <- try(HEAD(URL))
+    
+    if ((class(resp) == "try-error") | resp$status_code > 200) {
+      
+      URL <- sprintf("https://raw.githubusercontent.com/%s/%s/master/NEWS.md", owner, repo)
+      
+      resp <- try(HEAD(URL))
+      
+      if ((class(resp) == "try-error") | resp$status_code > 200) { return(NA) }
+      
+    }
+    
+    news_file <- str_match(resp$url, "/(NEWS.*)$")[2]
+    
+    news_content <- content(GET(sprintf("https://raw.githubusercontent.com/%s/%s/master/%s", owner, repo, news_file)), as="text")
+        
+    if (news_file == "NEWS") {
+      news_content <- gsub("^", "    ", news_content)
+      news_content <- gsub("\n", "\n    ", news_content)
+    } else {
+      news_content <- gsub("\n### ", "\n#### ", news_content)
+      news_content <- gsub("\n## ", "\n### ", news_content)
+      news_content <- gsub("\n# ", "\n## ", news_content)
+      news_content <- gsub("^# ", "## ", news_content)
+    }
+
+    return(news_content)
+    
+  })
+  
+}
+
+gh <- github_update()
+
+tmp <- gh %>% filter(update.available==TRUE) %>% 
+              group_by(package) %>% 
+              filter(row_number() == 1) %>% 
+              ungroup() %>% 
+              mutate(news_content=get_news(repo, owner)) %>%
+              filter(!is.na(news_content))
+
+for (i in 1:nrow(tmp)) {
+  cat(sprintf("# %s - %s\n\n%s\n\n---------------------------------------\n\n", tmp[i, "package"], tmp[i, "current.version"], tmp[i, "news_content"]))  
+}
+```

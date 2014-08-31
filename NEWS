@@ -1,5 +1,9 @@
 dtupdate News
 
+- Version 1.4 adds a whats_new() function that uses rmarkdown to produce an
+  HTML report from all the available NEWS[.md] files for any packages
+  that have updates
+
 - Version 1.3 works with both the BugReports: and URL: field and
   handles some additional URL-retrieving exceptions
 

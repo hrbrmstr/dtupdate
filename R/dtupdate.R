@@ -184,3 +184,13 @@ github_update <- function(auto.install=FALSE, ask=TRUE, widget=FALSE, .progress=
 
 }
 
+
+#' @title whats_new - produce a report on the new features of any out of date packages
+#' @description
+#'     Uses \link{render} from \link{rmarkdown} to generate a report of \code{NEWS} files from any packages that have updates not currently installed
+#'
+#' @import rmarkdown
+#' @export
+whats_new <- function() {
+  browseURL(render(system.file("markdown/whatsnew.Rmd", package="dtupdate"), output_file=tempfile(fileext=".html"), quiet=TRUE))
+}
