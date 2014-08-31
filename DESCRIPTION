@@ -18,9 +18,8 @@ Suggests:
     testthat
 Depends:
     R (>= 3.0.0),
-    devtools,
+    dplyr,
     httr (>= 0.3.0),
     stringr,
-    dplyr,
     rmarkdown (>= 0.2.64),
-    httr
+    devtools
