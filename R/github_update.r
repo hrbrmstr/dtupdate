@@ -96,7 +96,8 @@ github_update <- function (auto.install=FALSE, ask=TRUE, widget=FALSE,
     return(select(pkgs_df, package, date, version, gh_version, `*`, source))
 
   } else {
-    print("No packages installed via GitHub to update.")
+    message("No packages installed via GitHub to update.")
+    return(pkgs_df)
   }
 
 }
