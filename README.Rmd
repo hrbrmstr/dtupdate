@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Bob Rudis"
-date: August 31, 2014
+date: August 28, 2015
 output:
   md_document:
     variant: markdown_github
@@ -9,16 +9,22 @@ output:
 
 [![Build Status](https://travis-ci.org/hrbrmstr/dtupdate.png)](https://travis-ci.org/hrbrmstr/dtupdate)
 
-The `dtupdate` packages has functions that attempt to figure out which packages have non-CRAN versions (currently only looks for github ones) and then tries to figure out which ones have updates (i.e. the github version is > local version). It provides an option (not recommended) to auto-update any packages with newer development versions, which is tempered by the ability to selectively install said packages.
-
-The `URL` and `BugReports` fields are, frankly, a mess. Many packages have multiple URLs in one or both of those fields and the non-github URLs are all over the place in terms of formatting. It will take some time, but I'm pretty confident I can get r-forge, bitbucket, gitorius and other external repos working. This was an easy first step.
+CRAN and Bioconductor users have mechanisms to update their
+installed packages but those of us who live in the devtools GitHub world
+are levt to intall_github all on our own. This package fills that gap
+by providing a function that attempts to figure out which packages were
+installed from GitHub and then tries to figure
+out which ones have updates (i.e. the GitHub version is > local version).
+It provides an option (not recommended) to (optionally, selectively)
+auto-update any packages with newer GitHub development versions.
 
 The following functions are implemented:
 
-- `github_update` - find, report and optionally update packages installed from or available on github. It keys off of the `BugReports:` or `URL:` fields, looking for a github-ish URL and then grabbing what info that it can to see if the repo is in package format and has a `DESCRIPTION` file it can work with
+- `github_update` - find, report and optionally update packages installed from or available on github
 
 ### News
 
+- Version `1.5` pkg is no longer "broken" and takes a step back and solely focuses on updates from github. `whats_new()` has been temporarily removed. output has been formatted to look more like `devtools` output
 - Version `1.4` adds a `whats_new()` function that uses `rmarkdown` to produce an HTML report from all the available `NEWS[.md]` files for any packages that have updates
 - Version `1.3` works with both the `BugReports:` and `URL:` field and handles some additional URL-retrieving exceptions
 - Version `1.2` switches from `plyr` to `dplyr` to stop [@jayjacobs](http://twitter.com/jayjacobs) from whining, removes the `libLoc` switch from version `1.1` and replaces it with a boolean `all` parameter which let's you switch from inspecting the github packages installed across all library paths or just the first one (*usually* your user/local path), and adds a `show.location` parameter which will include the library path for each package in the data frame return
