@@ -18,4 +18,4 @@ BugReports: https://github.com/hrbrmstr/dtupdate/issues
 License: MIT + file LICENSE
 Suggests: testthat
 Depends: R (>= 3.0.0)
-Imports: dplyr, httr (>= 0.3.0), stringr, devtools
+Imports: dplyr, httr (>= 0.3.0), stringr, devtools, pbapply
