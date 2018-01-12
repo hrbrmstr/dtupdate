@@ -2,9 +2,9 @@ Package: dtupdate
 Type: Package
 Title: Keep Up-To-Date with Non-CRAN Package Updates
 Version: 1.5
-Date: 2015-08-27
+Date: 2018-01-12
 Author: Bob Rudis (@hrbrmstr), Thomas J Leeper (@thosjleeper)
-Maintainer: Bob Rudis <bob@rudis.net>
+Maintainer: Bob Rudis <bob@rud.is>
 Description: CRAN and Bioconductor users have mechanisms to update their
     installed packages but those of us who live in the devtools GitHub world
     are levt to intall_github all on our own. This package fills that gap
@@ -16,6 +16,13 @@ Description: CRAN and Bioconductor users have mechanisms to update their
 URL: https://github.com/hrbrmstr/dtupdate
 BugReports: https://github.com/hrbrmstr/dtupdate/issues
 License: MIT + file LICENSE
+Encoding: UTF-8
 Suggests: testthat
 Depends: R (>= 3.0.0)
-Imports: dplyr, httr (>= 0.3.0), stringr, devtools, pbapply
+Imports: 
+    dplyr, 
+    httr (>= 0.3.0), 
+    stringr, 
+    devtools, 
+    pbapply
+RoxygenNote: 6.0.1.9000

@@ -1,27 +1,34 @@
-[![Build Status](https://travis-ci.org/hrbrmstr/dtupdate.png)](https://travis-ci.org/hrbrmstr/dtupdate)
 
-CRAN and Bioconductor users have mechanisms to update their installed packages but those of us who live in the devtools GitHub world are levt to intall\_github all on our own. This package fills that gap by providing a function that attempts to figure out which packages were installed from GitHub and then tries to figure out which ones have updates (i.e. the GitHub version is \> local version). It provides an option (not recommended) to (optionally, selectively) auto-update any packages with newer GitHub development versions.
+[![Build
+Status](https://travis-ci.org/hrbrmstr/dtupdate.png)](https://travis-ci.org/hrbrmstr/dtupdate)
+
+# dtupdate
+
+Keep Up-To-Date with Non-CRAN Package Updates
+
+## Description
+
+CRAN and Bioconductor users have mechanisms to update their installed
+packages but those of us who live in the devtools GitHub world are levt
+to intall\_github all on our own. This package fills that gap by
+providing a function that attempts to figure out which packages were
+installed from GitHub and then tries to figure out which ones have
+updates (i.e. the GitHub version is \> local version). It provides an
+option (not recommended) to (optionally, selectively) auto-update any
+packages with newer GitHub development versions.
 
 The following functions are implemented:
 
--   `github_update` - find, report and optionally update packages installed from or available on github
+  - `github_update` - find, report and optionally update packages
+    installed from or available on github
 
-### News
-
--   Version `1.5` pkg is no longer "broken" and takes a step back and solely focuses on updates from github. `whats_new()` has been temporarily removed. output has been formatted to look more like `devtools` output
--   Version `1.4` adds a `whats_new()` function that uses `rmarkdown` to produce an HTML report from all the available `NEWS[.md]` files for any packages that have updates
--   Version `1.3` works with both the `BugReports:` and `URL:` field and handles some additional URL-retrieving exceptions
--   Version `1.2` switches from `plyr` to `dplyr` to stop [@jayjacobs](<http://twitter.com/jayjacobs>) from whining, removes the `libLoc` switch from version `1.1` and replaces it with a boolean `all` parameter which let's you switch from inspecting the github packages installed across all library paths or just the first one (*usually* your user/local path), and adds a `show.location` parameter which will include the library path for each package in the data frame return
--   Version `1.1` incorporates functionality from [Thomas J Leeper](http://twitter.com/thosjleeper)'s gist: , including the ability to interactively select which packages to install, the option to specify which `libLoc` will be searched by `installed.packages` and handling of a fringe case where the repo name does not match the package name (ironically, this was due to Hadley's `reshape` repo for the `reshape2` package)
--   Version `1.0` released (nascent github pkg update capability)
-
-### Installation
+## Installation
 
 ``` r
 devtools::install_github("hrbrmstr/dtupdate")
 ```
 
-### Usage
+## Usage
 
 ``` r
 library(dtupdate)
@@ -37,48 +44,57 @@ packageVersion("dtupdate")
 github_update()
 ```
 
-    ##             package       date    version gh_version *                                    source
-    ## 1  AnomalyDetection 2015-05-18        1.0        1.0   Github (twitter/AnomalyDetection@c78f0df)
-    ## 2              arco 2015-06-16        0.1        0.1                Github (leeper/arco@89954f0)
-    ## 3               ask 2015-08-20      1.0.0      1.0.0            Github (gaborcsardi/ask@605599f)
-    ## 4         data.tree 2015-08-27      0.1.9      0.1.9             Github (gluc/data.tree@73fd9cf)
-    ## 5          devtools 2015-08-27      1.9.0      1.9.0            Github (hadley/devtools@76ada1d)
-    ## 6             dmaps 2015-07-27      0.0.1      0.0.1          Github (jpmarindiaz/dmaps@320f550)
-    ## 7             dplyr 2015-08-25 0.4.2.9002 0.4.2.9002               Github (hadley/dplyr@25a1522)
-    ## 8             editR 2015-06-09      0.2.0      0.2.0            Github (swarm-lab/editR@70752e4)
-    ## 9         ggfortify 2015-08-26      0.0.3      0.0.3          Github (sinhrks/ggfortify@393b20a)
-    ## 10             ggsn 2015-08-27      0.2.0      0.2.0         Github (oswaldosantos/ggsn@3f01af2)
-    ## 11           github 2015-08-27      0.9.7      0.9.7            Github (cscheid/rgithub@2d6f643)
-    ## 12         gitstats 2015-06-21      0.2.7      0.2.7           Github (opencpu/gitstats@85ce1b5)
-    ## 13             httr 2015-06-29 1.0.0.9000 1.0.0.9000                Github (hadley/httr@d9395f2)
-    ## 14            Kmisc 2015-04-19      0.5.1      0.5.1           Github (kevinushey/Kmisc@b9a340e)
-    ## 15          knitron 2015-06-08        0.2        0.2        Github (fhirschmann/knitron@2b5c1d4)
-    ## 16         licorice 2015-07-02        0.1        0.1          Github (Bart6114/licorice@70c38d1)
-    ## 17     lineworkmaps 2015-07-22 0.0.0.9000 0.0.0.9000      Github (hrbrmstr/lineworkmaps@2975bb0)
-    ## 18        lubridate 2015-06-20 1.4.0.9500 1.4.0.9500           Github (hadley/lubridate@f9761ce)
-    ## 19       mason.rpkg 2015-08-20      1.0.0      1.0.0        Github (metacran/mason.rpkg@662bf15)
-    ## 20              PKI 2015-06-14      0.1-3      0.1-3                    Github (s-u/PKI@e58876e)
-    ## 21           plotly 2015-08-27      1.0.7      1.0.7            Github (ropensci/plotly@b0532b9)
-    ## 22           rapier 2015-07-02        0.1        0.1         Github (trestletech/rapier@012f083)
-    ## 23           rbokeh 2015-08-27    0.2.3.2    0.2.3.2               Github (bokeh/rbokeh@2bab3a6)
-    ## 24             rdom 2015-05-27      0.0.2      0.0.2             Github (cpsievert/rdom@0bfd967)
-    ## 25           readxl 2015-07-03 0.1.0.9000 0.1.0.9000              Github (hadley/readxl@7c7f66b)
-    ## 26              rio 2015-08-27      0.2.3      0.2.3                 Github (leeper/rio@f278e54)
-    ## 27        rmarkdown 2015-08-26      0.7.3      0.7.3          Github (rstudio/rmarkdown@ee2f13c)
-    ## 28             rope 2015-06-03      0.1.0      0.1.0             Github (ironholds/rope@9541abe)
-    ## 29        rsconnect 2015-08-13    0.4.1.4    0.4.1.4          Github (rstudio/rsconnect@295276c)
-    ## 30           secure 2015-06-14        0.1        0.1              Github (hadley/secure@b279c21)
-    ## 31         shinyAce 2015-06-09      0.2.1      0.2.1       Github (trestletech/shinyAce@3217e8e)
-    ## 32           SparkR 2015-07-02      1.4.0       <NA>               Github (apache/spark@22596c5)
-    ## 33              ssh 2015-08-24        0.1        0.1             Github (jeroenooms/ssh@5a1fc00)
-    ## 34           stocks 2015-06-21        9.0        9.0             Github (opencpu/stocks@5d1141a)
-    ## 35            Sxslt 2015-07-07     0.91-1     0.91-1             Github (cboettig/Sxslt@2e007d0)
-    ## 36           verisr 2015-08-18      2.0.6      2.0.6           Github (jayjacobs/verisr@f7fd01d)
-    ## 37          viridis 2015-08-26      0.2.5      0.2.5         Github (sjmgarnier/viridis@ac54cc1)
-    ## 38       websockets 2015-08-22      1.1.7      1.1.7       Github (rstudio/R-Websockets@b306dba)
-    ## 39         webtools 2015-06-24      0.1.0      0.3.0 *       Github (ironholds/webtools@50c3e5f)
+    ## No encoding supplied: defaulting to UTF-8.
 
-### Test Results
+    ##          package       date    version gh_version *                                     source
+    ## 1  addinexamples 2017-06-18      0.1.0      0.1.0       Github (rstudio/addinexamples@fae9609)
+    ## 2     adobecolor 2017-05-21        0.2        0.2         Github (hrbrmstr/adobecolor@7dc06f1)
+    ## 3      albersusa 2017-08-24      0.3.0      0.3.0          Github (hrbrmstr/albersusa@82220d3)
+    ## 4        archive 2017-10-08      1.0.0      1.0.0           Github (jimhester/archive@1c1a322)
+    ## 5          callr 2017-12-19 1.0.0.9000 1.0.0.9000                 Github (r-lib/callr@550fa6b)
+    ## 6   circlepackeR 2017-09-30 0.0.0.9000 0.0.0.9000     Github (jeromefroe/circlepackeR@f0a84d5)
+    ## 7      codefinch 2017-09-01 0.0.0.9002 0.0.0.9002      Github (ropenscilabs/codefinch@d6dddbb)
+    ## 8         crandb 2017-09-14      1.0.0      1.0.0             Github (metacran/crandb@c0c7c21)
+    ## 9           curl 2017-12-24        3.1        3.1                 Github (jeroen/curl@85a37fe)
+    ## 10     cyclocomp 2017-07-24      1.1.0      1.1.0       Github (MangoTheCat/cyclocomp@6156a12)
+    ## 11    data.world 2017-12-27      1.1.1      1.1.1   Github (datadotworld/data.world-r@2134122)
+    ## 12        dbplyr 2017-06-29 1.1.0.9000      1.2.0 *          Github (tidyverse/dbplyr@22fd4df)
+    ## 13           egg 2017-11-29      0.3.0      0.4.0 *              Github (baptiste/egg@d261631)
+    ## 14         falsy 2017-09-14      1.0.1      1.0.1           Github (gaborcsardi/falsy@ee26873)
+    ## 15      fireData 2017-12-24        1.1        1.1              Github (Kohze/fireData@3803b24)
+    ## 16  ggTimeSeries 2017-08-29        0.1        0.1    Github (AtherEnergy/ggTimeSeries@ca9639d)
+    ## 17            gh 2017-09-14      1.0.1      1.0.1                    Github (r-lib/gh@27db16c)
+    ## 18          ghql 2017-05-25 0.0.3.9110 0.0.3.9110               Github (ropensci/ghql@320549c)
+    ## 19  goodpractice 2017-07-24      1.0.0      1.0.0    Github (MangoTheCat/goodpractice@9969799)
+    ## 20     hannaford 2017-12-11      0.1.0       <NA>          Github (hrbrmstr/hannaford@a20b8cb)
+    ## 21        harbor 2017-06-10      0.2.0      0.2.0                  Github (wch/harbor@4e6ce36)
+    ## 22     htmltools 2017-06-18      0.3.6      0.3.6           Github (rstudio/htmltools@02678ee)
+    ## 23      icdcoder 2017-10-04 0.0.0.9000 0.0.0.9000           Github (wtcooper/icdcoder@777c878)
+    ## 24      jsonview 2017-05-16      0.2.0      0.2.0           Github (hrbrmstr/jsonview@d633133)
+    ## 25         knitr 2018-01-10     1.18.4     1.18.5 *               Github (yihui/knitr@0a9a502)
+    ## 26        miniUI 2017-06-18      0.1.1      0.1.1              Github (rstudio/miniUI@c705afe)
+    ## 27        notary 2017-07-24      0.1.0      0.1.0         Github (ropenscilabs/notary@35748db)
+    ## 28    pdfboxjars 2017-11-30      2.0.0      2.0.0         Github (hrbrmstr/pdfboxjars@fa2dd4d)
+    ## 29      pkgbuild 2017-12-19 0.0.0.9000 0.0.0.9000              Github (r-lib/pkgbuild@ce7f6d1)
+    ## 30       pkgdown 2017-06-18 0.1.0.9000 0.1.0.9000              Github (hadley/pkgdown@8f06abd)
+    ## 31       pkgload 2017-12-19 0.0.0.9000 0.0.0.9000               Github (r-lib/pkgload@70eaef8)
+    ## 32          riem 2017-11-17      0.1.1      0.1.1               Github (ropensci/riem@faee0b9)
+    ## 33         rlang 2017-12-24 0.1.4.9000 0.1.6.9002 *           Github (tidyverse/rlang@2a8971e)
+    ## 34      roxygen2 2017-12-19 6.0.1.9000 6.0.1.9000          Github (klutometis/roxygen@bbf259d)
+    ## 35         rpwnd 2017-05-26      0.1.0      0.1.0              Github (hrbrmstr/rpwnd@5089bfb)
+    ## 36     rrricanes 2017-08-13    0.2.0-6    0.2.0.7 *        Github (ropensci/rrricanes@95deb42)
+    ## 37        rtweet 2018-01-10     0.6.15     0.6.15             Github (mkearney/rtweet@c33b019)
+    ## 38        scales 2017-09-01 0.5.0.9000 0.5.0.9000               Github (hadley/scales@d767915)
+    ## 39         shiny 2017-09-01 1.0.5.9000 1.0.5.9000               Github (rstudio/shiny@4fa2af7)
+    ## 40        stackr 2017-12-28 0.0.0.9000 0.0.0.9000               Github (dgrtwo/stackr@3708582)
+    ## 41      subtools 2017-04-29        0.1        0.1              Github (fkeck/subtools@da82ba9)
+    ## 42     tabulizer 2017-05-22     0.1.24     0.1.24          Github (ropensci/tabulizer@a38d957)
+    ## 43 tabulizerjars 2017-05-22      0.9.2      0.9.2      Github (ropensci/tabulizerjars@c6cc40e)
+    ## 44      uaparser 2017-05-21      0.2.0      0.2.0             Github (ua-parser/uap-r@cbfdc17)
+    ## 45         withr 2017-12-24 2.1.1.9000 2.1.1.9000             Github (jimhester/withr@df18523)
+    ## 46       xmlview 2017-04-28      0.4.7      0.4.7            Github (hrbrmstr/xmlview@4e93801)
+
+## Test Results
 
 ``` r
 library(dtupdate)
@@ -87,13 +103,20 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Thu Aug 27 16:54:17 2015"
+    ## [1] "Fri Jan 12 07:38:29 2018"
 
 ``` r
 test_dir("tests/")
 ```
 
-    ## testthat results ========================================================================================================
+    ## ✔ | OK F W S | Context
+    ## ══ testthat results  ═══════════════════════════════════════════════════════════════════════════════
     ## OK: 1 SKIPPED: 0 FAILED: 0
     ## 
-    ## DONE
+    ## ══ Results ═════════════════════════════════════════════════════════════════════════════════════════
+    ## Duration: 1.6 s
+    ## 
+    ## OK:       0
+    ## Failed:   0
+    ## Warnings: 0
+    ## Skipped:  0
