@@ -44,7 +44,8 @@ packageVersion("dtupdate")
 github_update()
 ```
 
-    ## No encoding supplied: defaulting to UTF-8.
+    ## Warning in read.dcf(url_con, fields = "Version"): cannot open URL 'https://raw.githubusercontent.com/hrbrmstr/hannaford/
+    ## master/DESCRIPTION': HTTP status was '404 Not Found'
 
     ##          package       date    version gh_version *                                     source
     ## 1  addinexamples 2017-06-18      0.1.0      0.1.0       Github (rstudio/addinexamples@fae9609)
@@ -103,18 +104,18 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Fri Jan 12 07:38:29 2018"
+    ## [1] "Fri Jan 12 07:57:26 2018"
 
 ``` r
 test_dir("tests/")
 ```
 
     ## ✔ | OK F W S | Context
-    ## ══ testthat results  ═══════════════════════════════════════════════════════════════════════════════
-    ## OK: 1 SKIPPED: 0 FAILED: 0
+    ## ══ testthat results  ════════════════════════════════════════════════════════════════════
+    ## OK: 2 SKIPPED: 0 FAILED: 0
     ## 
-    ## ══ Results ═════════════════════════════════════════════════════════════════════════════════════════
-    ## Duration: 1.6 s
+    ## ══ Results ══════════════════════════════════════════════════════════════════════════════
+    ## Duration: 9.2 s
     ## 
     ## OK:       0
     ## Failed:   0
